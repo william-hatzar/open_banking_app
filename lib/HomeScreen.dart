@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:open_banking_app/widgets/Title%20Screen.dart';
-import 'package:open_banking_app/main.dart';
-
 
 class BankingView extends StatelessWidget {
-  const BankingView({Key? key}) : super(key: key);
+  final String firstName;
+
+  const BankingView({Key? key, required this.firstName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class BankingView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          titleSection
+          Text(firstName)
         ],
       ),
     );

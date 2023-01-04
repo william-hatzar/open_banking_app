@@ -10,18 +10,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  final _searchController = TextEditingController();
+  final firstInput = TextEditingController();
+  final secondInput = TextEditingController();
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: const Center(
                   child: Text(
                       "Welcome back",
-                      style: TextStyle( color: Colors.black, fontSize: 40, fontFamily: "Sans-serif", fontWeight: FontWeight.w500)
+                      style: TextStyle( color: Colors.blueGrey, fontSize: 40, fontFamily: "Sans-serif", fontWeight: FontWeight.w300)
                   ),
                 ),
               ),
@@ -45,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: _searchController,
+                controller: firstInput,
                 decoration: const InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -55,10 +49,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.all(10),
+              padding:  EdgeInsets.all(10),
               child: TextField(
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration:  InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(),
@@ -77,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: OutlinedButton(
                     onPressed: () {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => BankingView( )));
+                          context, MaterialPageRoute(builder: (_) => BankingView(firstName: firstInput.text)));
                     },
                     child: const Text(
                       'Continue',

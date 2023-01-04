@@ -1,62 +1,48 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:open_banking_app/LoginScreen.dart';
+void main() {
+  runApp(MyApp());
+}
 
-void main() => runApp(const Home());
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: 'Splash Screen',
+      home: MyHomePage(),
       debugShowCheckedModeBanner: false,
-      home: SplashPage()
     );
   }
 }
 
-class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
-
+class MyHomePage extends StatefulWidget {
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
-
-class _SplashPageState extends State<SplashPage> {
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    Timer ( const Duration(seconds: 3),
+            ()=>Navigator.pushReplacement(context,
+            MaterialPageRoute(builder:
+                (context) =>
+                const LoginScreen()
+            )
+        )
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-           const SizedBox(width: 50.00, height:100.00),
-          Padding(padding: const EdgeInsets.all(10),
-              child:
-              Column( children: [
-                Container(
-                  height: 50,
-                  width: 250,
-                  decoration: BoxDecoration(
-                      color: Colors.purple, borderRadius: BorderRadius.circular(0)),
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => const LoginScreen()));
-                    },
-                    child: const Text(
-                      'Continue',
-                      style: TextStyle(color: Colors.white, fontSize: 15 ),
-                    ),
-                  ),
-                )
-                ]
-              )
-
-              )
-         ],
-      )
+      body: Center(
+        child: Container(
+          child: (
+              const Text("Open Banking App", style: TextStyle( color: Colors.blueGrey, fontSize: 40, fontFamily: "Sans-serif", fontWeight: FontWeight.w300))
+        )
+        ),
+      ),
     );
   }
 }
-
-
