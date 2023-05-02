@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_banking_app/ForgotPassword.dart';
 import 'package:open_banking_app/HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -85,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(padding: const EdgeInsets.all(10.0),
                 child: OutlinedButton(
                   onPressed: (){
-                    //TODO FORGOT PASSWORD SCREEN GOES HERE
                   },
                   child: const Text(
                     'Forgot Password',
@@ -93,8 +93,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 )
             ),
-            const Padding(padding: EdgeInsets.all(10.00),
-                child:  Text('New User? Create Account'))
+            Padding(padding: const EdgeInsets.all(10.0),
+                child: OutlinedButton(
+                  onPressed: (){
+                   // TODO New account screen goes here
+                  },
+                  child: const Text(
+                    'New user, create an account here',
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                )
+            )
           ],
         )
     );

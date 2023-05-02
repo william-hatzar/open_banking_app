@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:open_banking_app/widgets/Title%20Screen.dart';
+import 'package:open_banking_app/views/UserAccountView.dart';
+
 
 class BankingView extends StatelessWidget {
   final String firstName;
@@ -8,23 +9,20 @@ class BankingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+     var firstNameLastName = firstName.split(" ");
+
+     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
-        title: const Text("Account Details", style: TextStyle(color: Colors.black),),
+        backgroundColor: Colors.purple,
+        title: const Text("Account Details", style: TextStyle(color: Colors.white),),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(firstName)
-        ],
-      ),
+      body:  MyWidget(name: firstNameLastName[0], lastName: firstNameLastName[1])
     );
   }
 }
