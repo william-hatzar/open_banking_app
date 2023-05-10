@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_banking_app/connectors/GetTransactions.dart';
 import 'package:open_banking_app/models/Transactions.dart';
+import 'package:open_banking_app/views/TransactionsDetailsView.dart';
 
 class TransactionsView extends StatefulWidget {
   final String firstName;
@@ -9,9 +10,9 @@ class TransactionsView extends StatefulWidget {
 
   const TransactionsView(
       {Key? key,
-        required this.firstName,
-        required this.lastName,
-        required this.bankName})
+      required this.firstName,
+      required this.lastName,
+      required this.bankName})
       : super(key: key);
 
   @override
@@ -47,7 +48,21 @@ class _TransactionsViewState extends State<TransactionsView> {
                         itemCount: (snapshot.data!).transactionsList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => TransactionsDetailsView(
+                                          bankName: (snapshot.data!)
+                                              .transactionsList[index]
+                                              .bankName,
+                                          company: (snapshot.data!)
+                                              .transactionsList[index]
+                                              .name,
+                                          price: (snapshot.data!)
+                                              .transactionsList[index]
+                                              .price)));
+                            },
                             child: Card(
                               elevation: 4.0,
                               margin: const EdgeInsets.only(bottom: 16.0),
@@ -65,7 +80,7 @@ class _TransactionsViewState extends State<TransactionsView> {
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           (snapshot.data!)
@@ -97,15 +112,16 @@ class _TransactionsViewState extends State<TransactionsView> {
                                     ),
                                     const SizedBox(height: 12),
                                     Row(
-                                      children: [
+                                      children: const [
                                         Icon(
                                           Icons.location_on,
                                           size: 16,
                                           color: Colors.grey,
                                         ),
-                                        const SizedBox(width: 4),
-                                        Text("",
-                                          style: const TextStyle(
+                                        SizedBox(width: 4),
+                                        Text(
+                                          "London",
+                                          style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey,
                                           ),
@@ -114,16 +130,16 @@ class _TransactionsViewState extends State<TransactionsView> {
                                     ),
                                     const SizedBox(height: 12),
                                     Row(
-                                      children: [
-                                        Icon(
+                                      children: const [
+                                         Icon(
                                           Icons.credit_card,
                                           size: 16,
                                           color: Colors.grey,
                                         ),
-                                        const SizedBox(width: 4),
+                                         SizedBox(width: 4),
                                         Text(
                                           "**** **** **** 123",
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey,
                                           ),
@@ -141,8 +157,7 @@ class _TransactionsViewState extends State<TransactionsView> {
                   ],
                 ),
               );
-            } else if
-            (snapshot.hasError) {
+            } else if (snapshot.hasError) {
               return const Center(
                   child: Text("No transactions to display",
                       style: TextStyle(
