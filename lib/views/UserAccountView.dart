@@ -46,7 +46,7 @@ class _MyWidgetState extends State<MyWidget> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
                 child: SafeArea (
                     child : Column (
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,15 +56,12 @@ class _MyWidgetState extends State<MyWidget> {
                       child: PageView.builder(
                         itemCount: (snapshot.data!).bankAccounts.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (_) => TransactionsView(firstName: widget.name, lastName: widget.lastName, bankName:  (snapshot.data!).bankAccounts[index]
-                                  .bankAccountName)));
-                            },
-                            child: Column(
-                              children: [
-                                CreditCardWidget(
+                          return Column(
+                            children: [
+                              Container(
+                                width: 500,
+                                height: 250,
+                                child: CreditCardWidget(
                                   glassmorphismConfig: false ? Glassmorphism.defaultConfig() : null,
                                   cardNumber: (snapshot.data!).bankAccounts[index].accountNumber,
                                   expiryDate: "03/01/97",
@@ -75,10 +72,10 @@ class _MyWidgetState extends State<MyWidget> {
                                   frontCardBorder: !false ? Border.all(color: Colors.grey) : null,
                                   backCardBorder: !false ? Border.all(color: Colors.grey) : null,
                                   showBackView: false,
-                                  onCreditCardWidgetChange: (cheese) { },
+                                  onCreditCardWidgetChange: (dummy) { },
                                   customCardTypeIcons: <CustomCardTypeIcon>[
                                     CustomCardTypeIcon(
-                                      cardType: CardType.mastercard,
+                                      cardType: CardType.visa,
                                       cardImage: Image.asset(
                                         'assets/mastercard.png',
                                         height: 48,
@@ -93,10 +90,10 @@ class _MyWidgetState extends State<MyWidget> {
                                   backgroundImage: true ? 'assets/card/card_bg.png' : null ,
                                   //true when you want to show cvv(back) view
                                 ),
-                                Expanded(child: TransactionsView(firstName: widget.name, lastName: widget.lastName, bankName: (snapshot.data!).bankAccounts[index]
-                                    .bankAccountName))
-                              ],
-                            ),
+                              ),
+                              Expanded(child: TransactionsView(firstName: widget.name, lastName: widget.lastName, bankName: (snapshot.data!).bankAccounts[index]
+                                  .bankAccountName))
+                            ],
                           );
                         },
                       ),

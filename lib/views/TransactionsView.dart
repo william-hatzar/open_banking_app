@@ -6,11 +6,12 @@ class TransactionsView extends StatefulWidget {
   final String firstName;
   final String lastName;
   final String bankName;
+
   const TransactionsView(
       {Key? key,
-      required this.firstName,
-      required this.lastName,
-      required this.bankName})
+        required this.firstName,
+        required this.lastName,
+        required this.bankName})
       : super(key: key);
 
   @override
@@ -51,40 +52,84 @@ class _TransactionsViewState extends State<TransactionsView> {
                               elevation: 4.0,
                               margin: const EdgeInsets.only(bottom: 16.0),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(
-                                      width: 5, color: Colors.white)),
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: const BorderSide(
+                                  width: 5,
+                                  color: Colors.white,
+                                ),
+                              ),
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      (snapshot.data!)
-                                          .transactionsList[index]
-                                          .name,
-                                      style: const TextStyle(fontSize: 18),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          (snapshot.data!)
+                                              .transactionsList[index]
+                                              .name,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "£${(snapshot.data!).transactionsList[index].price}",
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      "£${(snapshot.data!)
-                                          .transactionsList[index].price}",
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                    const SizedBox(height: 8),
+                                    const SizedBox(height: 12),
                                     Text(
                                       (snapshot.data!)
                                           .transactionsList[index]
                                           .category,
-                                      style: const TextStyle(fontSize: 16),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                      ),
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                        (snapshot.data!)
-                                            .transactionsList[index]
-                                            .bankName
-                                    )
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.location_on,
+                                          size: 16,
+                                          color: Colors.grey,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text("",
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.credit_card,
+                                          size: 16,
+                                          color: Colors.grey,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          "**** **** **** 123",
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -96,10 +141,16 @@ class _TransactionsViewState extends State<TransactionsView> {
                   ],
                 ),
               );
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
+            } else if
+            (snapshot.hasError) {
+              return const Center(
+                  child: Text("No transactions to display",
+                      style: TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 30,
+                          fontFamily: "Sans-serif",
+                          fontWeight: FontWeight.w300)));
             }
-
             return const Center(
               child: CircularProgressIndicator(),
             );
