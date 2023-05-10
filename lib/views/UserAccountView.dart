@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:open_banking_app/models/User.dart';
 import 'package:open_banking_app/connectors/GetBankAccounts.dart';
 import 'package:open_banking_app/views/TransactionsView.dart';
+import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class MyWidget extends StatefulWidget {
   final String name;
@@ -46,22 +47,13 @@ class _MyWidgetState extends State<MyWidget> {
             if (snapshot.hasData) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
+                child: SafeArea (
+                    child : Column (
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(height: 16),
-                    Text(
-                      (snapshot.data!).name,
-                      style: const  TextStyle( color: Colors.blueGrey, fontSize: 24, fontFamily: "Sans-serif", fontWeight: FontWeight.w300),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Bank Accounts:',
-                      style:  TextStyle( color: Colors.blueGrey, fontSize: 18, fontFamily: "Sans-serif", fontWeight: FontWeight.w300),
-                    ),
-                    const SizedBox(height: 16),
                     Expanded(
-                      child: ListView.builder(
+                      child: PageView.builder(
                         itemCount: (snapshot.data!).bankAccounts.length,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
@@ -70,59 +62,49 @@ class _MyWidgetState extends State<MyWidget> {
                                   context, MaterialPageRoute(builder: (_) => TransactionsView(firstName: widget.name, lastName: widget.lastName, bankName:  (snapshot.data!).bankAccounts[index]
                                   .bankAccountName)));
                             },
-                            child: Card(
-                              elevation: 10.0,
-                              margin: const EdgeInsets.only(bottom: 16.0),
-                              shape:  RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(width: 1, color: Colors.white)),
-                              child: Container(
-                                decoration: BoxDecoration(image: DecorationImage(
-                                  image: AssetImage("assets/images/${(snapshot.data!).bankAccounts[index]
-                              .bankAccountName}.png"),
-                                  fit: BoxFit.fitWidth,
-                                  alignment: Alignment.topCenter
-                                )),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        (snapshot.data!).bankAccounts[index]
-                                            .bankAccountName,
-                                        style: const TextStyle(fontSize: 18),
+                            child: Column(
+                              children: [
+                                CreditCardWidget(
+                                  glassmorphismConfig: false ? Glassmorphism.defaultConfig() : null,
+                                  cardNumber: (snapshot.data!).bankAccounts[index].accountNumber,
+                                  expiryDate: "03/01/97",
+                                  cardHolderName: (snapshot.data!).name,
+                                  cvvCode: "123",
+                                  bankName: (snapshot.data!).bankAccounts[index]
+                                      .bankAccountName,
+                                  frontCardBorder: !false ? Border.all(color: Colors.grey) : null,
+                                  backCardBorder: !false ? Border.all(color: Colors.grey) : null,
+                                  showBackView: false,
+                                  onCreditCardWidgetChange: (cheese) { },
+                                  customCardTypeIcons: <CustomCardTypeIcon>[
+                                    CustomCardTypeIcon(
+                                      cardType: CardType.mastercard,
+                                      cardImage: Image.asset(
+                                        'assets/mastercard.png',
+                                        height: 48,
+                                        width: 48,
                                       ),
-
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        (snapshot.data!).bankAccounts[index]
-                                            .accountType,
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        (snapshot.data!).bankAccounts[index]
-                                            .accountNumber,
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        (snapshot.data!).bankAccounts[index]
-                                            .sortCode,
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
+                                  obscureCardNumber: true,
+                                  obscureCardCvv: true,
+                                  isHolderNameVisible: true,
+                                  cardBgColor: Color(0xff363636),
+                                  backgroundImage: true ? 'assets/card/card_bg.png' : null ,
+                                  //true when you want to show cvv(back) view
                                 ),
-                              ),
+                                Expanded(child: TransactionsView(firstName: widget.name, lastName: widget.lastName, bankName: (snapshot.data!).bankAccounts[index]
+                                    .bankAccountName))
+                              ],
                             ),
                           );
                         },
                       ),
                     ),
+                    const SizedBox(height: 8.0)
+
               ])
-              );
+              ));
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}");
             }
@@ -136,7 +118,7 @@ class _MyWidgetState extends State<MyWidget> {
         bottomNavigationBar: BottomNavigationBarTheme(
             data: BottomNavigationBarThemeData(
               backgroundColor:
-              Colors.purple, // set the background color to white
+              Colors.black, // set the background color to white
               selectedItemColor:
               Colors.white, // set the selected item color to purple
               unselectedItemColor: Colors.white.withOpacity(

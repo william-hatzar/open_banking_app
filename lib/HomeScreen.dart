@@ -15,8 +15,8 @@ class BankingView extends StatelessWidget {
      return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        backgroundColor: Colors.purple,
-        title: const Text("Account Details", style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.black,
+        title: const Text("Accounts", style: TextStyle(color: Colors.white),),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
